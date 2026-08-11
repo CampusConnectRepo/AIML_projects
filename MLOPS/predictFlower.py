@@ -36,8 +36,8 @@ def main():
 
     #Save the trained model and target names
     #model, target_names = train_model()
-    os.makedirs("artifacts", exist_ok=True)
-    joblib.dump(model, "artifacts/iris_model.pkl")
+    os.makedirs("MLOPS/artifacts", exist_ok=True)
+    joblib.dump(model, "MLOPS/artifacts/iris_model.pkl")
 
     #save a tiny metrics file 
     acc = model.score(X_test, y_test)

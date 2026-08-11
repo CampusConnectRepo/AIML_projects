@@ -1,41 +1,42 @@
-name: CI - Train and Save Model
+name: CI - Train and Save the model
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  matrix-pip:
+    name: Train and Save the model
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12"]
-
+        python: [3.11, 3.12]
+    
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup python 
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
+           python-version: ${{ matrix.python }}
+      
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip setuptools wheel
 
-      - name: Install dependencies
+      - name: Install project dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Train the model
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run prediction script
-        run: python MLOPS/predictFlower.py
-
+           python train.py
+           ls -la artifacts
+      
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: model-artifacts-${{ matrix.python-version }}-${{ github.run_id }}
-          path: artifacts/
-          if-no-files-found: error
+          name: ml-artifacts-${{ matrix.python }}-${{ github.run_id }}
+          path: MLOPS/artifacts
+
