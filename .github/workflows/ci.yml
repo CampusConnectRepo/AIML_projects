@@ -31,7 +31,7 @@ jobs:
 
       - name: Train the model
         run: |
-           python predictFlower.py
+           python MLOPS/predictFlower.py
            ls -la MLOPS/artifacts
       
       - name: Upload artifacts
