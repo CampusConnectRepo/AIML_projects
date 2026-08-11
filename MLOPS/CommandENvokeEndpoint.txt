@@ -1,0 +1,24 @@
+Invoke-WebRequest -Uri "http://192.168.0.8:5000/predict" -Method POST -Headers @{ "Content-Type" = "application/json" } -Body '{"features":[5.1,1.4,3.5,0.2]}'
+
+--REbuilding an Image 
+
+cd C:\Users\kkuma\AIML_projects\MLOPS
+docker build -t build-mlops:latest .
+docker run -d --name mlops -p 5000:5000 build-mlops:latest
+docker ps
+docker logs mlops
+
+---# rebuild
+docker build -t build-mlops:latest .
+
+# run (map port)
+docker run -d --name mlops -p 5000:5000 build-mlops:latest
+
+# if it exits, inspect logs and files inside image
+docker ps -a
+docker logs mlops
+docker run --rm build-mlops:latest ls -la /app
+
+
+
+
