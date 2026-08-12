@@ -1,5 +1,5 @@
 outs:
-- md5: 5931988d100f8c9bac97b9e7314e8bbb
-  size: 349
+- md5: 02a26db4b1e01194599ed5df1e7ca51c
+  size: 876
   hash: md5
   path: wine_sample.csv
